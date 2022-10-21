@@ -1,4 +1,5 @@
 const express = require("express");
+const inputCheck = require("./utils/inputCheck");
 require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -61,6 +62,67 @@ app.get("/api/inventory/:id", (req, res) => {
       return;
     }
     res.json({ message: "success", data: row });
+  });
+});
+// delete inventory
+app.delete("/api/inventory/:id", (req, res) => {
+  const sql = `DELETE FROM inventory WHERE id = ?`;
+  const params = [req.params.id];
+
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.statusMessage(400).json({ error: res.message });
+    } else if (!result.affectedRows) {
+      res.json({
+        message: "INVENTORY NOT FOUND",
+      });
+    } else {
+      res.json({
+        message: "Delete Successful",
+        changes: result.affectedRows,
+        id: req.params.id,
+      });
+    }
+  });
+});
+// create inventory
+app.post("/api/inventory", ({ body }, res) => {
+  const errors = inputCheck(
+    body,
+    "code",
+    "name",
+    "qty",
+    "price",
+    "family",
+    "inSTOCK"
+  );
+
+  if (errors) {
+    res.status(400).json({ errors: errors });
+    return;
+  }
+  const sql =
+    "INSERT INTO inventory (code, name, qty, price, family, inSTOCK) VALUES(?,?,?,?,?,?)";
+
+  const params = [
+    body.code,
+    body.name,
+    body.qty,
+    body.price,
+    body.family,
+    body.inSTOCK,
+  ];
+
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+
+    res.json({
+      message: "success",
+      data: body,
+    });
   });
 });
 // Default response for any other request (Not Found)
