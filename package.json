@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/gsaaad/inventory_SQL#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.20"
