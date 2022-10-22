@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 // const DB = require("./config/connection")
 const mysql = require("mysql2");
+const e = require("express");
 
 // connect to database
 
@@ -72,6 +73,78 @@ app.get("/api/inventory/:id", (req, res) => {
       return;
     }
     res.json({ message: "success", data: row });
+  });
+});
+
+// get all departments
+app.get("/api/departments", (req, res) => {
+  const sql = "SELECT * FROM departments";
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "success",
+      data: rows,
+    });
+  });
+});
+
+// get department by id
+app.get("/api/departments/:id", (req, res) => {
+  const sql = "SELECT * from departments WHERE id = ?";
+  const params = [req.params.id];
+
+  db.query(sql, params, (err, row) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "success",
+      data: row,
+    });
+  });
+});
+app.post("/api/departments", ({ body }, res) => {
+  const errors = inputCheck(body, "name", "description");
+
+  if (errors) {
+    res.status(400).json({ errors: errors });
+    return;
+  }
+
+  const sql = "INSERT INTO departments(name,description) VALUES(?,?)";
+
+  const params = [body.name, body.description];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({ message: "success", data: body });
+  });
+});
+// delete department by id
+app.delete("/api/departments/:id", (req, res) => {
+  const sql = "DELETE FROM departments WHERE id = ?";
+  const params = [req.params.id];
+
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: res.message });
+    } else if (!result.affectedRows) {
+      res.json({
+        message: "department not found",
+      });
+    } else {
+      res.json({
+        message: "deleted department",
+        changes: result.affectedRows,
+        id: req.params.id,
+      });
+    }
   });
 });
 
