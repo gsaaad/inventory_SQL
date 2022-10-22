@@ -38,7 +38,11 @@ app.get("/", (req, res) => {
 
 // all inventory
 app.get("/api/inventory", (req, res) => {
-  const sql = `SELECT * FROM inventory`;
+  const sql = `SELECT inventory.*, departments.name
+                As department_name
+                FROM inventory
+                LEFT JOIN departments
+                ON inventory.department = departments.id`;
   db.query(sql, (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -53,7 +57,13 @@ app.get("/api/inventory", (req, res) => {
 
 // single inventory by ID
 app.get("/api/inventory/:id", (req, res) => {
-  const sql = `SELECT * FROM inventory WHERE id = ?`;
+  // const sql = `SELECT * FROM inventory WHERE id = ?`;
+  const sql = `SELECT inventory.*, departments.name
+                AS department_name
+                FROM inventory
+                LEFT JOIN departments
+                ON inventory.department = departments.id
+                WHERE inventory.id = ?`;
   const params = [req.params.id];
 
   db.query(sql, params, (err, row) => {
@@ -64,6 +74,7 @@ app.get("/api/inventory/:id", (req, res) => {
     res.json({ message: "success", data: row });
   });
 });
+
 // delete inventory
 app.delete("/api/inventory/:id", (req, res) => {
   const sql = `DELETE FROM inventory WHERE id = ?`;
