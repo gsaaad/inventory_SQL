@@ -3,21 +3,20 @@ const inputCheck = require("./utils/inputCheck");
 require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const app = express();
-// const DB = require("./config/connection")
+const db = require("./config/connection");
 const mysql = require("mysql2");
-const e = require("express");
 
 // connect to database
 
-const db = mysql.createConnection(
-  {
-    host: "localhost",
-    user: "root",
-    password: process.env.mySQLPASSWORD,
-    database: "grocerystoreinventory",
-  },
-  console.log("connected to the inventory database")
-);
+// const db = mysql.createConnection(
+//   {
+//     host: "localhost",
+//     user: "root",
+//     password: process.env.mySQLPASSWORD,
+//     database: "grocerystoreinventory",
+//   },
+//   console.log("connected to the inventory database")
+// );
 
 // db.query("SELECT * from inventory", (err, row) => {
 //   console.log(row);
@@ -209,9 +208,27 @@ app.post("/api/inventory", ({ body }, res) => {
     });
   });
 });
+//update inventory to SET price
+app.put("/api/inventory/price/:id", (req, res) => {
+  const sql = "UPDATE inventory SET price = ? WHERE id = ?";
 
+  const params = [req.body.price, req.params.id];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else if (!result.affectedRows) {
+      res.json({ message: "Inventory not found" });
+    } else {
+      res.json({
+        message: "success",
+        data: req.body,
+        changes: result.affectedRows,
+      });
+    }
+  });
+});
 //update inventory to SET qty
-app.put("/api/candidate/:id", (req, res) => {
+app.put("/api/inventory/qty/:id", (req, res) => {
   const sql = "UPDATE inventory SET qty = ? WHERE id = ?";
 
   const params = [req.body.qty, req.params.id];
@@ -229,6 +246,27 @@ app.put("/api/candidate/:id", (req, res) => {
     }
   });
 });
+
+//update inventory to SET family
+app.put("/api/inventory/family/:id", (req, res) => {
+  const sql = "UPDATE inventory SET family = ? WHERE id = ?";
+
+  const params = [req.body.family, req.params.id];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else if (!result.affectedRows) {
+      res.json({ message: "Inventory not found" });
+    } else {
+      res.json({
+        message: "success",
+        data: req.body,
+        changes: result.affectedRows,
+      });
+    }
+  });
+});
+
 // Default response for any other request (Not Found)
 app.use((req, res) => {
   res.status(404).end();
