@@ -209,6 +209,26 @@ app.post("/api/inventory", ({ body }, res) => {
     });
   });
 });
+
+//update inventory to SET qty
+app.put("/api/candidate/:id", (req, res) => {
+  const sql = "UPDATE inventory SET qty = ? WHERE id = ?";
+
+  const params = [req.body.qty, req.params.id];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else if (!result.affectedRows) {
+      res.json({ message: "Inventory not found" });
+    } else {
+      res.json({
+        message: "success",
+        data: req.body,
+        changes: result.affectedRows,
+      });
+    }
+  });
+});
 // Default response for any other request (Not Found)
 app.use((req, res) => {
   res.status(404).end();
