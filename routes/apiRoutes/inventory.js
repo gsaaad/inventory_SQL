@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 // all inventory
 router.get("/inventory", (req, res) => {
   const sql = `SELECT inventory.*, departments.name
-                  As department_name
+                  AS department_name
                   FROM inventory
                   LEFT JOIN departments
                   ON inventory.department = departments.id`;
@@ -55,7 +55,7 @@ router.delete("/inventory/:id", (req, res) => {
 
   db.query(sql, params, (err, result) => {
     if (err) {
-      res.statusMessage(400).json({ error: res.message });
+      res.status(400).json({ error: res.message });
     } else if (!result.affectedRows) {
       res.json({
         message: "INVENTORY NOT FOUND",

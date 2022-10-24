@@ -40,4 +40,58 @@ VALUES
 ('Meat', 'Ribs, Steak,Ground-Beef'),
 ('SeasFood','Salmon, Trout, Squid'),
 ('Baby', 'Diapers, Toys, Pacifiers'),
-('Electronics', 'PS5, XBOX360, Wii')
+('Electronics', 'PS5, XBOX360, Wii');
+
+
+INSERT INTO roles (title, salary, department)
+VALUES
+('Manager', 85000, 1),
+('Assistant Manager', 45000, 1),
+("Employee", 25000, 1),
+('Manager', 75000, 2),
+('Assistant Manager', 55000, 2),
+("Employee", 25000, 2),
+('Manager', 65000, 3),
+('Assistant Manager', 35000, 3),
+("Employee", 25000, 3),
+('Manager', 95000, 4),
+('Assistant Manager', 49000, 4),
+("Employee", 25000, 4),
+('Manager', 88000, 5),
+('Assistant Manager', 37000, 5),
+("Employee", 25000, 5),
+('Manager', 68000, 6),
+('Assistant Manager', 49000, 6),
+("Employee", 25000, 6),
+('Manager', 59000, 7),
+('Assistant Manager', 47000, 7),
+("Employee", 25000, 7),
+('Manager', 90000, 8),
+('Assistant Manager', 37000, 8),
+("Employee", 25000, 8);
+
+
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES
+('Josh','Jacobs', 1, 1 ),
+('Mike','Johnson', 2, 1 ),
+('Ja','Morant', 3, 1 ),
+('Ja','Morant', 4, 2 ),
+('Ja','Morant', 5, 2 ),
+('Ja','Morant', 6, 2 ),
+('Ja','Morant', 7, 3 ),
+('Ja','Morant', 8, 3 ),
+('Ja','Morant', 9, 3 ),
+('Ja','Morant', 10, 4 ),
+('Ja','Morant', 11, 4 ),
+('Ja','Morant', 12, 4 ),
+('Ja','Morant', 13,5 ),
+('Ja','Morant', 14,5 ),
+('Ja','Morant',15, 5),
+('Ja','Morant', 16, 6 ),
+('Ja','Morant', 17, 6 ),
+('Ja','Morant', 18, 6 ),
+('Ja','Morant', 19, 7 ),
+('Ja','Morant', 20, 7 ),
+('Ja','Morant', 21, 7 );
+
