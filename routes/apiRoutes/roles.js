@@ -5,7 +5,7 @@ const inputCheck = require("../../utils/inputCheck");
 
 // get all roles and join with departments
 router.get("/roles", (req, res) => {
-  const sql = `SELECT * FROM roles.*, departments.name
+  const sql = `SELECT roles.*, departments.name
                 AS department_name
                 FROM roles
                 LEFT JOIN departments
@@ -108,3 +108,4 @@ router.put("/roles/:id", (req, res) => {
     }
   });
 });
+module.exports = router;
