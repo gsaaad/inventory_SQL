@@ -75,4 +75,44 @@ router.delete("/departments/:id", (req, res) => {
   });
 });
 
+// update department name
+router.put("/departments/name/:id", (req, res) => {
+  const sql = `UPDATE departments SET name = ? WHERE id = ?`;
+
+  const params = [req.body.name, req.params.id];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else if (!result.affectedRows) {
+      res.json({ message: "Inventory not found" });
+    } else {
+      res.json({
+        message: "success",
+        data: req.body,
+        changes: result.affectedRows,
+      });
+    }
+  });
+});
+
+// update department description
+router.put("/departments/description/:id", (req, res) => {
+  const sql = `UPDATE departments SET description = ? WHERE id = ?`;
+
+  const params = [req.body.description, req.params.id];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else if (!result.affectedRows) {
+      res.json({ message: "Inventory not found" });
+    } else {
+      res.json({
+        message: "success",
+        data: req.body,
+        changes: result.affectedRows,
+      });
+    }
+  });
+});
+
 module.exports = router;
