@@ -3,14 +3,15 @@ require("dotenv").config();
 
 // connect to database
 
+db_name = "grocerystoreinventory";
 const db = mysql.createConnection(
   {
     host: "localhost",
     user: "root",
     password: process.env.mySQLPASSWORD,
-    database: "grocerystoreinventory",
+    database: db_name,
   },
-  console.log("connected to the grocerystoreinventory database")
+  console.log(`connected to the ${db_name} database`)
 );
 
 module.exports = db;
