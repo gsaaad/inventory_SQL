@@ -84,7 +84,7 @@ router.put("/departments/name/:id", (req, res) => {
     if (err) {
       res.status(400).json({ error: err.message });
     } else if (!result.affectedRows) {
-      res.json({ message: "Inventory not found" });
+      res.json({ message: "Department not found" });
     } else {
       res.json({
         message: "success",
