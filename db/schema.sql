@@ -1,9 +1,8 @@
 
 DROP TABLE IF EXISTS inventory;
 DROP TABLE IF EXISTS departments;
-
-
-
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS employees;
 
 create TABLE departments (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -11,25 +10,28 @@ create TABLE departments (
     description TEXT
 );
 
-/* Create Table for Inventory */
 CREATE TABLE inventory (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     code INTEGER,
     name VARCHAR(30) NOT NULL,
     qty INTEGER NOT NULL,
     price FLOAT NOT NULL,
-    family VARCHAR(30) NOT NULL,
+    category VARCHAR(30) NOT NULL,
     department INTEGER,
     inSTOCK BOOLEAN NOT NULL,
-    CONSTRAINT fk_department FOREIGN KEY(department) REFERENCES departments(id) ON DELETE SET NULL
+    supplier VARCHAR(30) NOT NULL,
+    country VARCHAR(15) NOT NULL,
+    CONSTRAINT fk_department FOREIGN KEY (department) REFERENCES departments(id) ON DELETE SET NULL
+
 );
 
 CREATE TABLE roles(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(30) NOT NULL,
+    title VARCHAR(50) NOT NULL,
     salary FLOAT,
-    department INTEGER
-    CONSTRAINT fk_department FOREIGN KEY(department) REFERENCES departments(id) ON DELETE SET NULL
+    department INTEGER,
+    CONSTRAINT fk_deparment FOREIGN KEY (department) REFERENCES departments(id) ON DELETE SET NULL
+
 );
 
 CREATE TABLE employees(
@@ -37,6 +39,8 @@ CREATE TABLE employees(
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     role_id INTEGER,
-    manager_id INTEGER REFERENCES employee(id) ON DELETE SET NULL
+    manager_id INTEGER REFERENCES employee(id) ON DELETE SET NULL,
     CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL
 );
+
+
