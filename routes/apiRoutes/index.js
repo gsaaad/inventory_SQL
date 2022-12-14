@@ -5,5 +5,6 @@ const router = express.Router();
 router.use(require("./inventory"));
 router.use(require("./department"));
 router.use(require("./roles"));
+router.use(require("./employees"));
 
 module.exports = router;

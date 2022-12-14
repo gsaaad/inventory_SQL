@@ -32,7 +32,7 @@ router.get("/employees/:id", (req, res) => {
     });
   });
 });
-router.post("employees", ({ body }, res) => {
+router.post("/employees", ({ body }, res) => {
   // check input first before posting
   const errors = inputCheck(
     body,
@@ -47,9 +47,14 @@ router.post("employees", ({ body }, res) => {
     return;
   }
   const sql =
-    "INSERT INTO employees(first_name,last_name,role_id,manager_id) VALUES (?,?,?,?";
+    "INSERT INTO employees(first_name,last_name,role_id,manager_id) VALUES(?,?,?,?)";
 
-  const params = [body.name, body.description];
+  const params = [
+    body.first_name,
+    body.last_name,
+    body.role_id,
+    body.manager_id,
+  ];
 
   db.query(sql, params, (err, result) => {
     if (err) {
@@ -100,7 +105,7 @@ router.delete("/employees/:id", (req, res) => {
 //   });
 // });
 router.put("/employees/role/:id", (req, res) => {
-  const sql = "UPDATE employee SET role_id = ? WHERE id = ?";
+  const sql = "UPDATE employees SET role_id = ? WHERE id = ?";
   const params = [req.body.role_id, req.params.id];
 
   db.query(sql, params, (err, result) => {
@@ -116,9 +121,9 @@ router.put("/employees/role/:id", (req, res) => {
   });
 });
 router.put("/employees/manager/:id", (req, res) => {
-  const sql = "UPDATE employee SET manager_id WHERE id = ?";
+  const sql = "UPDATE employees SET manager_id = ? WHERE id = ?";
   const params = [req.body.manager_id, req.params.id];
-
+  console.log(req.body.manager_id, req.params.id);
   db.query(sql, params, (err, result) => {
     if (err) {
       res.json({ error: err.message });
