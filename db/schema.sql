@@ -9,9 +9,9 @@ DROP TABLE IF EXISTS employees;
 
 create TABLE departments (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    extension INTEGER,
     name VARCHAR(30) NOT NULL,
     description TEXT,
+    extension INTEGER,
     budget FLOAT,
     sale TEXT,
     margin FLOAT,

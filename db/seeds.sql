@@ -31,49 +31,49 @@ VALUES
 
 
 
-/* INSERT INTO departments (name, description)
+/* INSERT INTO departments (name, description, extension, budget, sale, margin, trending)
 VALUES
-('Produce', 'Fruits, vegetables, Fresh Smoothies'),
-('Clothing', 'T-Shirts, Pants, Socks'),
-('Dairy', 'Milk, Yogurt, Cheese'),
-('Grocery', 'Pasta, Cookies, Flour'),
-('Meat', 'Ribs, Steak,Ground-Beef'),
-('SeasFood','Salmon, Trout, Squid'),
-('Baby', 'Diapers, Toys, Pacifiers'),
-('Electronics', 'PS5, XBOX360, Wii'); */
-
-/* 
-INSERT INTO roles (title, salary, department)
-VALUES
-('Manager', 85000, 1),
-('Assistant Manager', 45000, 1),
-("Employee", 25000, 1),
-('Manager', 75000, 2),
-('Assistant Manager', 55000, 2),
-("Employee", 25000, 2),
-('Manager', 65000, 3),
-('Assistant Manager', 35000, 3),
-("Employee", 25000, 3),
-('Manager', 95000, 4),
-('Assistant Manager', 49000, 4),
-("Employee", 25000, 4),
-('Manager', 88000, 5),
-('Assistant Manager', 37000, 5),
-("Employee", 25000, 5),
-('Manager', 68000, 6),
-('Assistant Manager', 49000, 6),
-("Employee", 25000, 6),
-('Manager', 59000, 7),
-('Assistant Manager', 47000, 7),
-("Employee", 25000, 7),
-('Manager', 90000, 8),
-('Assistant Manager', 37000, 8),
-("Employee", 25000, 8); */
+('Produce', 'Fruits, vegetables, Fresh Smoothies', 4002, 2140000, 'APPLES//BANANAS', 0.3, 'APPLES'),
+('Clothing', 'T-Shirts, Pants, Socks', 4003, 290000, 'APPLES//BANANAS', 0.5, 'PANTS'),
+('Dairy', 'Milk, Yogurt, Cheese', 4004, 2180000, 'MILK/CHEESE', 0.2, 'CHEESE'),
+('Grocery', 'Pasta, Cookies, Flour', 4034, 2520000, 'PASTA/COOKIES', 0.7, 'PASTA'),
+('Meat', 'Ribs, Steak,Ground-Beef', 4014, 2560000, 'STEAK/RIBS', 0.4, 'RIBS'),
+('SeasFood','Salmon, Trout, Squid', 4054, 4250000, 'SQUID, TROUT', 0.3, 'SALMON'),
+('Baby', 'Diapers, Toys, Pacifiers', 4032, 50000, 'TOYS/PACIFIERS', 0.2, 'DIAPERS'),
+('Electronics', 'PS5, XBOX360, Wii', 4234, 1250000, 'XBOX/PS5', 3.4, 'PS5'); */
 
 
-/* INSERT INTO employees (first_name, last_name, role_id, manager_id)
+/* INSERT INTO roles (title, salary, department, responsibilities, positionType, reportsTo)
 VALUES
-('Josh','Jacobs', 1,  1 ),
-('Mike','Johnson', 2, 1 ),
-('Ja','Morant', 3,  1 ),
-('Ja','Morant', 4,  2 ), */
+('Manager', 85000, 1, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 45000, 1, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 1, "WORK", 'FULL-TIME', 1),
+('Manager', 75000, 2, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 55000, 2, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 2, "WORK", 'FULL-TIME', 1),
+('Manager', 65000, 3, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 35000, 3, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 3, "WORK", 'FULL-TIME', 1),
+('Manager', 95000, 4, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 49000, 4, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 4, "WORK", 'FULL-TIME', 1),
+('Manager', 88000, 5, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 37000, 5, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 5, "WORK", 'FULL-TIME', 1),
+('Manager', 68000, 6, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 49000, 6, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 6, "WORK", 'FULL-TIME', 1),
+('Manager', 59000, 7, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 47000, 7, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 7, "WORK", 'FULL-TIME', 1),
+('Manager', 90000, 8, "WORK", 'FULL-TIME', 1),
+('Assistant Manager', 37000, 8, "WORK", 'FULL-TIME', 1),
+("Employee", 25000, 8, "WORK", 'FULL-TIME', 1); */
+
+
+INSERT INTO employees (employeeNumber, first_name, last_name, email, role_id, extension)
+VALUES
+(3305, 'Mike', 'Johnson', 'mJ@live.com', 3,147),
+(3305, 'Mike', 'Johnson', 'mJ@live.com', 3,147),
+(3305, 'Mike', 'Johnson', 'mJ@live.com', 3,147),
+(3305, 'Mike', 'Johnson', 'mJ@live.com', 3,147)
