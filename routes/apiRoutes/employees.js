@@ -4,7 +4,8 @@ const inputCheck = require("../../utils/inputCheck");
 const db = require("../../config/connection");
 
 router.get("/employees", (req, res) => {
-  const sql = `SELECT * from employees`;
+  const sql = "SELECT * FROM employees";
+
   db.query(sql, (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -16,28 +17,23 @@ router.get("/employees", (req, res) => {
     });
   });
 });
-
 router.get("/employees/:id", (req, res) => {
-  const sql = `SELECT * FROM employees WHERE id = ?`;
+  const sql = "SELECT * FROM employees WHERE id = ?";
   const params = [req.params.id];
 
-  db.query(sql, params, (err, row) => {
+  db.query(sql, params, (err, rows) => {
     if (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
       return;
     }
     res.json({
       message: "success",
-      data: row,
+      data: rows,
     });
   });
 });
-
 router.post("/employees", ({ body }, res) => {
-  // first_name VARCHAR(30) NOT NULL,
-  // last_name VARCHAR(30) NOT NULL,
-  // role_id INTEGER,
-  // manager_id
+  // check input first before posting
   const errors = inputCheck(
     body,
     "first_name",
@@ -50,10 +46,15 @@ router.post("/employees", ({ body }, res) => {
     res.status(400).json({ errors: errors });
     return;
   }
+  const sql =
+    "INSERT INTO employees(first_name,last_name,role_id,manager_id) VALUES(?,?,?,?)";
 
-  const sql = `INSERT INTO employees(first_name, last_name, role_id, manager_id), VALUES(?,?,?,?)`;
-
-  const params = [body.name, body.description];
+  const params = [
+    body.first_name,
+    body.last_name,
+    body.role_id,
+    body.manager_id,
+  ];
 
   db.query(sql, params, (err, result) => {
     if (err) {
@@ -63,9 +64,8 @@ router.post("/employees", ({ body }, res) => {
     res.json({ message: "success", data: body });
   });
 });
-
 router.delete("/employees/:id", (req, res) => {
-  const sql = `DELETE FROM employees WHERE id = ?`;
+  const sql = "DELETE FROM employees WHERE id = ?";
   const params = [req.params.id];
 
   db.query(sql, params, (err, result) => {
@@ -73,86 +73,65 @@ router.delete("/employees/:id", (req, res) => {
       res.status(400).json({ error: res.message });
     } else if (!result.affectedRows) {
       res.json({
-        message: "employee not found",
+        message: "Employee is not found.. Check if id is valid",
       });
     } else {
       res.json({
-        message: "deleted employee",
+        message: `Deleted Employee ID: ${params}`,
         changes: result.affectedRows,
         id: req.params.id,
       });
     }
   });
 });
+// update employee email
+// router.put("/employees/email:id", (req, res) => {
+//   const sql = "UPDATE employee SET email = ? WHERE id = ?";
 
-router.put("/employees/firstname/:id", (req, res) => {
-  const sql = `UPDATE employees SET first_name = ? WHERE id = ?`;
+//   const params = [req.body.email, req.params.id];
 
-  const params = [req.body.first_name, req.params.id];
-  db.query(sql, params, (err, result) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-    } else if (!result.affectedRows) {
-      res.json({ message: "employee not found" });
-    } else {
-      res.json({
-        message: "success",
-        data: req.body,
-        changes: result.affectedRows,
-      });
-    }
-  });
-});
-router.put("/employees/lastname/:id", (req, res) => {
-  const sql = `UPDATE employees SET last_name = ? WHERE id = ?`;
-
-  const params = [req.body.last_name, req.params.id];
-  db.query(sql, params, (err, result) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-    } else if (!result.affectedRows) {
-      res.json({ message: "employee not found" });
-    } else {
-      res.json({
-        message: "success",
-        data: req.body,
-        changes: result.affectedRows,
-      });
-    }
-  });
-});
+//   db.query(sql, params, (err, result) => {
+//     if (err) {
+//       res.status(400).json({ error: err.message });
+//     } else if (!result.affectedRows) {
+//       res.json({ message: "Employee not found.. Check if ID is valid" });
+//     } else {
+//       res.json({
+//         message: `Successful update! Employee email was changed to${req.body.email} `,
+//         data: req.body,
+//         changes: result.affectedRows,
+//       });
+//     }
+//   });
+// });
 router.put("/employees/role/:id", (req, res) => {
-  const sql = `UPDATE employees SET role_id = ? WHERE id = ?`;
-
+  const sql = "UPDATE employees SET role_id = ? WHERE id = ?";
   const params = [req.body.role_id, req.params.id];
+
   db.query(sql, params, (err, result) => {
     if (err) {
-      res.status(400).json({ error: err.message });
+      res.json({ error: err.message });
     } else if (!result.affectedRows) {
-      res.json({ message: "employee not found" });
+      res.json({ message: "Employee not found... Check if ID is valid" });
     } else {
       res.json({
-        message: "success",
-        data: req.body,
-        changes: result.affectedRows,
+        message: `Successful Update! Employee ID ${req.params.id} role ID has been changed to ${req.body.role_id}`,
       });
     }
   });
 });
 router.put("/employees/manager/:id", (req, res) => {
-  const sql = `UPDATE employees SET manager_id = ? WHERE id = ?`;
-
+  const sql = "UPDATE employees SET manager_id = ? WHERE id = ?";
   const params = [req.body.manager_id, req.params.id];
+  console.log(req.body.manager_id, req.params.id);
   db.query(sql, params, (err, result) => {
     if (err) {
-      res.status(400).json({ error: err.message });
+      res.json({ error: err.message });
     } else if (!result.affectedRows) {
-      res.json({ message: "employee not found" });
+      res.json({ message: "Employee ID was not found.. check if ID is valid" });
     } else {
       res.json({
-        message: "success",
-        data: req.body,
-        changes: result.affectedRows,
+        message: `Successful Update! Employee with ID ${req.params.id}'s  manager_id was changed to  ${req.body.manager_id}`,
       });
     }
   });

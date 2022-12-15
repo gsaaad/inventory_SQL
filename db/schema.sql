@@ -4,25 +4,34 @@ DROP TABLE IF EXISTS departments;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS employees;
 
+
+
+
 create TABLE departments (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    description TEXT
+    description TEXT,
+    extension INTEGER,
+    budget FLOAT,
+    sale TEXT,
+    margin FLOAT,
+    trending TEXT
 );
 
 CREATE TABLE inventory (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    code INTEGER,
+    code INTEGER NOT NULL,
     name VARCHAR(30) NOT NULL,
-    qty INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     price FLOAT NOT NULL,
     category VARCHAR(30) NOT NULL,
     department INTEGER,
     inSTOCK BOOLEAN NOT NULL,
     supplier VARCHAR(30) NOT NULL,
-    country VARCHAR(15) NOT NULL,
-    CONSTRAINT fk_department FOREIGN KEY (department) REFERENCES departments(id) ON DELETE SET NULL
-
+    country VARCHAR(30) NOT NULL,
+    lastShipment DATETIME,
+    nextShipment DATETIME
+    /* CONSTRAINT fk_department FOREIGN KEY(department) REFERENCES departments(id) ON DELETE SET NULL */
 );
 
 CREATE TABLE roles(
@@ -30,17 +39,20 @@ CREATE TABLE roles(
     title VARCHAR(50) NOT NULL,
     salary FLOAT,
     department INTEGER,
-    CONSTRAINT fk_deparment FOREIGN KEY (department) REFERENCES departments(id) ON DELETE SET NULL
-
+    responsibilities TEXT,
+    positionType TEXT,
+    reportsTo INTEGER REFERENCES employees(id) ON DELETE SET NULL
+    /* CONSTRAINT fk_roles_department FOREIGN KEY(department) REFERENCES departments(id) ON DELETE SET NULL */
 );
 
 CREATE TABLE employees(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    employeeNumber INTEGER(11),
+    extension INTEGER(11),
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    role_id INTEGER,
-    manager_id INTEGER REFERENCES employee(id) ON DELETE SET NULL,
-    CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL
+    email VARCHAR(100) NOT NULL,
+    role_id INTEGER
+    /* CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL */
 );
-
 

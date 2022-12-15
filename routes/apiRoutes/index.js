@@ -6,5 +6,6 @@ router.use(require("./inventory"));
 router.use(require("./department"));
 router.use(require("./employees"));
 router.use(require("./roles"));
+router.use(require("./employees"));
 
 module.exports = router;
